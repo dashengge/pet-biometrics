@@ -1,0 +1,65 @@
+_BASE_: ../Base-SBS.yml
+
+INPUT:
+  SIZE_TRAIN: [256, 256]
+  SIZE_TEST: [256, 256]
+
+MODEL:
+  FREEZE_LAYERS: []
+  META_ARCHITECTURE: BaselineOim
+  BACKBONE:
+    FEAT_DIM: 2560
+    PRETRAIN_PATH: /home/lzy/.cache/torch/checkpoints/RepVGG-B2-train.pth 
+    NAME: build_repvgg_backbone
+    DEPTH: B2
+    WITH_IBN: True
+    WITH_NL:  True
+  # WEIGHTS: "./logs/Pet/sbs_resnext101/model_best.pth"
+  LOSSES:
+    NAME: ("OimLoss",) #"CrossEntropyLoss", 
+    CE:
+      EPSILON: 0.1
+      SCALE: 1.0
+    OIM:
+      SCALE: 1.0
+  HEADS:
+    NAME: EmbeddingHead
+    NORM: BN
+    EMBEDDING_DIM: 0
+    NECK_FEAT: after
+    POOL_LAYER: GeneralizedMeanPoolingP
+    CLS_LAYER: Linear
+    # SCALE: 64
+    # MARGIN: 0.35
+
+SOLVER:
+  AMP:
+    ENABLED: False
+  # OPT: Adam
+  # SCHED: CosineAnnealingLR
+  # BASE_LR: 0.0007
+  # BIAS_LR_FACTOR: 1.
+  # ETA_MIN_LR: 7.7e-5
+  OPT: Adam
+  MAX_EPOCH: 90
+  BASE_LR: 0.00035
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+  IMS_PER_BATCH: 64 #
+  SCHED: MultiStepLR
+  STEPS: [ 30, 50, 70 ]
+  GAMMA: 0.1
+  WARMUP_ITERS: 3000
+  # FREEZE_ITERS: 3000
+  CHECKPOINT_PERIOD: 10
+  DELAY_EPOCHS: 0
+DATASETS:
+  NAMES: ("Pet",)
+  TESTS: ("Pet",)
+DATALOADER: 
+  SAMPLER_TRAIN: BalancedIdentitySampler
+  NUM_INSTANCE: 4
+TEST:
+  EVAL_PERIOD: 4
+  IMS_PER_BATCH: 256
+OUTPUT_DIR: logs/Pet/sbs_repvgg_labelsmooth

@@ -1,0 +1,45 @@
+logs
+*.pth
+*checkpoint
+events*
+sbs*
+resn*/
+degug*
+datasets/pet_biometric_challenge_2022/
+datasets/pet_biometric_challenge_2022
+datasets/pet_biometric_challenge_2022.zip
+pyrightconfig.json
+log*/
+# compilation and distribution
+__pycache__
+_ext
+*.pyc
+*.pyd
+*.so
+*.dll
+*.egg-info/
+build/
+dist/
+wheels/
+
+# pytorch/python/numpy formats
+*.pth
+*.pkl
+*.npy
+*.ts
+model_ts*.txt
+
+# ipython/jupyter notebooks
+*.ipynb
+**/.ipynb_checkpoints/
+# Editor temporaries
+*.swn
+*.swo
+*.swp
+*~
+
+# editor settings
+.idea
+.vscode
+_darcs
+.DS_Store
