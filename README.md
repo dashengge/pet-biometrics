@@ -1,14 +1,72 @@
 # Code for pet biometrics challenge
 ![image-20220531043715690](1.png)
+## Requirements
 
-1. data preparation:
+- Linux or macOS with python ≥ 3.6
 
-   put dataset in datasets directory
-   put models' log dir in the logs, the model weights can be download by this link:链接：https://pan.baidu.com/s/1Z3PZLIer8S7U_NdCihgm9A 提取码：bauk
+- PyTorch ≥ 1.6
 
-2. bash predict.sh
+- [yacs](https://github.com/rbgirshick/yacs)
 
-<img>
+- Cython (optional to compile evaluation code)
 
-... continuing...
+- tensorboard (needed for visualization): `pip install tensorboard`
+
+- gdown (for automatically downloading pre-train model)
+
+- sklearn
+
+- termcolor
+
+- tabulate
+
+- [faiss](https://github.com/facebookresearch/faiss) `pip install faiss-gpu`
+
+- for conda
+
+  ```
+  conda create -n fastreid python=3.7
+  conda activate fastreid
+  conda install pytorch==1.6.0 torchvision tensorboard -c pytorch
+  pip install -r docs/requirements.txt
+  ```
+
+We use GPU 3090 for training and testing. The cuda version is 11.1, torch version is 1.7.1, the python version is 3.8.8.
+
+## Prepare Dataset
+
+Download the competition datasets pet_biometric_challenge_2022, and then unzip them under the directory like
+
+```
+datasets
+├── pet_biometric_challenge_2022
+│   └── train
+│   └── validation
+│   └── test
+```
+
+## Prepare Pre-trained Models
+
+We have trained 8 models, and you can download the pre-trained model form this link: 链接：https://pan.baidu.com/s/1Z3PZLIer8S7U_NdCihgm9A 提取码：bauk. Then you should save it under the path of logs. The file tree should be like as:
+
+```
+logs
+└── resnet101
+    └── config.yaml
+    └── model_final.pth
+```
+
+## Test
+
+You can get the final submit.csv by runing:
+
+```
+bash predict.sh
+```
+
+It will generate submit.csv in the root dir, which is the final ensemble result.
+
+## Training
+
+## Conclusion
 
