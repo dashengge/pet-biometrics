@@ -18,6 +18,15 @@ with open("./datasets/pet_biometric_challenge_2022/validation/submit.csv", "r") 
             if img_path2 not in index_cluster.keys():
                 index_cluster[img_path2]=cluster
                 cluster+=1
+        if score>0.72358:
+            if img_path1 not in index_cluster.keys() and img_path2 not in index_cluster.keys():
+                index_cluster[img_path1]=index_cluster[img_path2]=cluster
+                cluster+=1
+            elif img_path1 in index_cluster.keys():
+                index_cluster[img_path2]=index_cluster[img_path2]
+            else:
+                index_cluster[img_path1]=index_cluster[img_path2]
+
 with open("./validation.json", 'w') as f:
     json_dict = json.dumps(index_cluster)
     f.write(json_dict)

@@ -187,11 +187,11 @@ class OIMLoss2(nn.Module, ABC):
         self.register_buffer('sample_labels', torch.zeros(num_samples,))
     def forward(self, inputs, targets):
         inputs = F.normalize(inputs, dim=1).cuda()
-        # outputs = oim(inputs, targets, self.features, self.momentum)
+        outputs = oim(inputs, targets, self.features, self.momentum)
         outputs2 = inputs.mm(self.sample_features.t())
         temp_sims = outputs2.detach().clone()
         # print(outputs)
-        # outputs /= self.temp
+        outputs /= self.temp
         outputs2 /= self.temp
         # loss = F.cross_entropy(outputs, targets)
         # loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
@@ -225,11 +225,11 @@ class OIMLoss2(nn.Module, ABC):
             concated_target = torch.zeros((len(concated_input)), dtype=concated_input.dtype).to(torch.device('cuda'))
             concated_target[0:len(ori_asso_ind)] = weights #1.0 / len(ori_asso_ind)
             associate_loss += -1 * (F.log_softmax(concated_input.unsqueeze(0), dim=1) * concated_target.unsqueeze(0)).sum()
-        loss2 = 0.5 * associate_loss / len(targets)
+        loss_wincetance = 0.5 * associate_loss / len(targets)
         # loss +=loss2
-        # loss = self.ce(outputs, targets)
+        loss = self.ce(outputs, targets)
         # return loss, loss2
-        return 0, loss2
+        return loss, loss_wincetance
 
 class OIMLoss3(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
