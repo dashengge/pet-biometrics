@@ -12,7 +12,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "./logs/resnext101_ms/model_best.pth"
+  WEIGHTS: "./logs/resnext101_ms_finetune/model_best.pth"
   LOSSES:
     NAME: ("OIMLoss_MS",) #"CrossEntropyLoss", 
     CE:
@@ -52,12 +52,12 @@ SOLVER:
   CHECKPOINT_PERIOD: 5
   DELAY_EPOCHS: 0
 DATASETS:
-  NAMES: ("Pet",)
-  TESTS: ("Pet",)
+  NAMES: ("Pet_Validation",)
+  TESTS: ("Pet_Validation",)
 DATALOADER: 
   SAMPLER_TRAIN: BalancedIdentitySampler
   NUM_INSTANCE: 4
 TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
-OUTPUT_DIR: logs/resnext101_ms_finetune
+OUTPUT_DIR: logs/resnext101_ms_validation

@@ -17,7 +17,7 @@ from ..datasets import DATASET_REGISTRY
 from collections import defaultdict
 
 @DATASET_REGISTRY.register()
-class Pet(ImageDataset):
+class Pet_Validation(ImageDataset):
     """Market1501.
 
     Reference:
@@ -81,31 +81,30 @@ class Pet(ImageDataset):
                 # else:
                 #     train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
                 
-                train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
-                if (int(pid)+1)%10==0:
-                    test[int(pid)].append(img_path)
+                # train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
+                # if (int(pid)+1)%10==0:
+                #     test[int(pid)].append(img_path)
 
                 # if int(pid)%20==0:
-                # if (int(pid)+1)%8==0:
-                # # if random.random()<0.15:
-                #     train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
-                #     test[int(pid)].append(img_path)
-            # data  = open("./validation.json",'r')
-            # data_validataion = json.load(data)
-            # labels = set()
-            # for key in data_validataion:
-            #     # labels.add(data_validataion[key])
-            #     lable = data_validataion[key]
-            #     train.append((osp.join("./datasets/pet_biometric_challenge_2022/validation/images/",key), self.dataset_name + "_" + str(lable+6000), self.dataset_name + "_" + str(-1)))
-            #         # query.append((img_path, int(id), -1))
-            # print(len(labels))
-
+                if (int(pid)+1)%5==0:
+                # if random.random()<0.15:
+                    train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
+                    test[int(pid)].append(img_path)
+            
+            data  = open("./datasets/validation.json",'r')
+            data_validataion = json.load(data)
+            labels = set()
+            for key in data_validataion:
+                # labels.add(data_validataion[key])
+                lable = data_validataion[key]
+                train.append((osp.join("./datasets/pet_biometric_challenge_2022/validation/images/",key), self.dataset_name + "_" + str(lable+6000), self.dataset_name + "_" + str(-1)))
+                    # query.append((img_path, int(id), -1))
+            print(len(labels))
         for key in test.keys():
             query.append(((osp.join(dir_path,test[key][0]), int(key), -1)))
             for path in test[key][1:]:
                 gallery.append(((osp.join(dir_path,path), int(key), -2)))
         return train, query, gallery
-
         # img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
         # pattern = re.compile(r'([-\d]+)_c(\d)')
         # data = []

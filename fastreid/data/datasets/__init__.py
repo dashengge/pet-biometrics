@@ -35,6 +35,7 @@ from .shinpuhkan import Shinpuhkan
 from .wildtracker import WildTrackCrop
 from .cuhk_sysu import cuhkSYSU
 from .pet import Pet
+from .pet_validation import Pet_Validation
 
 # Vehicle re-id datasets
 from .veri import VeRi
