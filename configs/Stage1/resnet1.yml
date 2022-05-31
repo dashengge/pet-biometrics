@@ -13,7 +13,7 @@ MODEL:
     WITH_NL:  True
 # WEIGHTS: "./logs/Pet/sbs_resnext101/model_best.pth"
   LOSSES:
-    NAME: ("OIMLoss",) #"CrossEntropyLoss", 
+    NAME: ("OIMLoss",) #"CrossEntropyLoss",  # with weighted instance loss
     CE:
       EPSILON: 0.1
       SCALE: 1.0

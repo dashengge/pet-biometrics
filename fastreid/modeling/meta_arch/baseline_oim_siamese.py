@@ -157,7 +157,8 @@ class BaselineOimSiamese(nn.Module):
                 oim_kwargs = self.loss_kwargs.get('oim')
                 loss1, loss2 = self.oim_loss(
                     pred_features,
-                    gt_labels) #* oim_kwargs.get('scale')
+                    gt_labels) 
+                #* oim_kwargs.get('scale')
                 # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
                 # loss_dict['loss_oim']=loss1
                 _, loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')

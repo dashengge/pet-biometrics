@@ -61,3 +61,4 @@ TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
 OUTPUT_DIR: logs/resnext101_1
+

@@ -7,6 +7,8 @@ from torch import nn, autograd
 import math
 import random
 from .triplet_loss import *
+
+
 def TripletLossOim(inputs_col, targets_col, inputs_row, targets_row):
     margin = 0.1
     n = inputs_col.size(0)
@@ -155,7 +157,7 @@ class OIM(autograd.Function):
         return grad_inputs, None, None, None
 def oim(inputs, indexes, features, momentum=0.5):
     return OIM.apply(inputs, indexes, features, torch.Tensor([momentum]).to(inputs.device))
-class OIMLoss(nn.Module, ABC):
+class OIMLoss_ori(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
         super(OIMLoss, self).__init__()
         self.num_features = num_features
@@ -174,9 +176,9 @@ class OIMLoss(nn.Module, ABC):
         # loss = self.ce(outputs, targets)
         return loss
         
-class OIMLoss2(nn.Module, ABC):
+class OIMLoss(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
-        super(OIMLoss2, self).__init__()
+        super(OIMLoss, self).__init__()
         self.num_features = num_features
         self.num_samples = num_samples
         self.momentum = momentum
@@ -231,9 +233,160 @@ class OIMLoss2(nn.Module, ABC):
         # return loss, loss2
         return loss, loss_wincetance
 
-class OIMLoss3(nn.Module, ABC):
+
+class OIMLoss_tri(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
-        super(OIMLoss3, self).__init__()
+        super(OIMLoss_tri, self).__init__()
+        self.num_features = num_features
+        self.num_samples = num_samples
+        self.momentum = momentum
+        self.temp = temp
+        self.ce = CrossEntropyLabelSmooth(num_samples)
+        self.register_buffer('features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_labels', torch.zeros(num_samples,))
+    def forward(self, inputs, targets):
+        inputs = F.normalize(inputs, dim=1).cuda()
+        outputs = oim(inputs, targets, self.features, self.momentum)
+        outputs2 = inputs.mm(self.sample_features.t())
+        temp_sims = outputs2.detach().clone()
+        # print(outputs)
+        outputs /= self.temp
+        outputs2 /= self.temp
+        # loss = F.cross_entropy(outputs, targets)
+        # loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = F.cross_entropy(outputs2, targets)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        loss2 = TripletLossOim(inputs,targets,self.sample_features,self.sample_labels)
+        loss = self.ce(outputs, targets)
+        # return loss, loss2
+        return loss, loss2
+
+class OIMLoss_con(nn.Module, ABC):
+    def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
+        super(OIMLoss_con, self).__init__()
+        self.num_features = num_features
+        self.num_samples = num_samples
+        self.momentum = momentum
+        self.temp = temp
+        self.ce = CrossEntropyLabelSmooth(num_samples)
+        self.register_buffer('features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_labels', torch.zeros(num_samples,))
+    def forward(self, inputs, targets):
+        inputs = F.normalize(inputs, dim=1).cuda()
+        outputs = oim(inputs, targets, self.features, self.momentum)
+        outputs2 = inputs.mm(self.sample_features.t())
+        temp_sims = outputs2.detach().clone()
+        # print(outputs)
+        outputs /= self.temp
+        outputs2 /= self.temp
+        # loss = F.cross_entropy(outputs, targets)
+        # loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = F.cross_entropy(outputs2, targets)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = TripletLossOim(inputs,targets,self.sample_features,self.sample_labels)
+        loss = self.ce(outputs, targets)
+        # return loss, loss2
+        return loss, loss2
+class OIMLoss_MS(nn.Module, ABC):
+    def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
+        super(OIMLoss_MS, self).__init__()
+        self.num_features = num_features
+        self.num_samples = num_samples
+        self.momentum = momentum
+        self.temp = temp
+        self.ce = CrossEntropyLabelSmooth(num_samples)
+        self.register_buffer('features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_labels', torch.zeros(num_samples,))
+    def forward(self, inputs, targets):
+        inputs = F.normalize(inputs, dim=1).cuda()
+        outputs = oim(inputs, targets, self.features, self.momentum)
+        outputs2 = inputs.mm(self.sample_features.t())
+        temp_sims = outputs2.detach().clone()
+        # print(outputs)
+        outputs /= self.temp
+        outputs2 /= self.temp
+        # loss = F.cross_entropy(outputs, targets)
+        loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = F.cross_entropy(outputs2, targets)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = TripletLossOim(inputs,targets,self.sample_features,self.sample_labels)
+        loss = self.ce(outputs, targets)
+        # return loss, loss2
+        return loss, loss2
+
+class OIMLoss_Mininstance(nn.Module, ABC):
+    def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
+        super(OIMLoss_Mininstance, self).__init__()
+        self.num_features = num_features
+        self.num_samples = num_samples
+        self.momentum = momentum
+        self.temp = temp
+        self.ce = CrossEntropyLabelSmooth(num_samples)
+        self.register_buffer('features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_features', torch.zeros(num_samples, num_features))
+        self.register_buffer('sample_labels', torch.zeros(num_samples,))
+    def forward(self, inputs, targets):
+        inputs = F.normalize(inputs, dim=1).cuda()
+        outputs = oim(inputs, targets, self.features, self.momentum)
+        outputs2 = inputs.mm(self.sample_features.t())
+        temp_sims = outputs2.detach().clone()
+        # print(outputs)
+        outputs /= self.temp
+        outputs2 /= self.temp
+        # loss = F.cross_entropy(outputs, targets)
+        # loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = F.cross_entropy(outputs2, targets)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
+        # loss2 = TripletLossOim(inputs,targets,self.sample_features,self.sample_labels)
+        associate_loss=0
+        for k in range(len(targets)):
+            ori_asso_ind = torch.nonzero(self.sample_labels == targets[k]).squeeze(-1)
+            # weights = F.softmax(1-temp_sims[k, ori_asso_ind],dim=0)
+            temp_sims[k, ori_asso_ind] = -10000.0  # mask out positive
+            sel_ind = torch.sort(temp_sims[k])[1][-500:]
+            min_index = torch.min(outputs2[k, ori_asso_ind],dim=0)[1]
+            # import pdb; pdb.set_trace()
+            # print(outputs2[k, ori_asso_ind][[min_index,]])
+            concated_input = torch.cat((outputs2[k, ori_asso_ind][[int(min_index),]], outputs2[k, sel_ind]), dim=0)
+            concated_target = torch.zeros((len(concated_input)), dtype=concated_input.dtype).to(torch.device('cuda'))
+            concated_target[0] = 1.0 #weights #1.0 / len(ori_asso_ind) :len(ori_asso_ind)
+            associate_loss += -1 * (F.log_softmax(concated_input.unsqueeze(0), dim=1) * concated_target.unsqueeze(0)).sum()
+        loss_mincetance = 0.5*associate_loss / len(targets)
+
+        # associate_loss=0
+        # for k in range(len(targets)):
+        #     ori_asso_ind = torch.nonzero(self.sample_labels == targets[k]).squeeze(-1)
+        #     weights = F.softmax(1-temp_sims[k, ori_asso_ind],dim=0)
+        #     temp_sims[k, ori_asso_ind] = -10000.0  # mask out positive
+        #     sel_ind = torch.sort(temp_sims[k])[1][-500:]
+        #     concated_input = torch.cat((outputs2[k, ori_asso_ind], outputs2[k, sel_ind]), dim=0)
+        #     concated_target = torch.zeros((len(concated_input)), dtype=concated_input.dtype).to(torch.device('cuda'))
+        #     concated_target[0:len(ori_asso_ind)] = weights #1.0 / len(ori_asso_ind)
+        #     associate_loss += -1 * (F.log_softmax(concated_input.unsqueeze(0), dim=1) * concated_target.unsqueeze(0)).sum()
+        # loss_mincetance = 0.5 * associate_loss / len(targets)
+        # # loss +=loss2
+        loss = self.ce(outputs, targets)
+        # return loss, loss2
+        return loss, loss_mincetance
+
+class OIMLoss_siameseoffline(nn.Module, ABC):
+    def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
+        super(OIMLoss_siameseoffline, self).__init__()
         self.num_features = num_features
         self.num_samples = num_samples
         self.momentum = momentum
@@ -322,9 +475,9 @@ class OIMLoss3(nn.Module, ABC):
             return predicts
 
 
-class OIMLoss2_ori(nn.Module, ABC):
+class OIMLoss2_oriinstance(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
-        super(OIMLoss2_ori, self).__init__()
+        super(OIMLoss2_oriinstance, self).__init__()
         self.num_features = num_features
         self.num_samples = num_samples
         self.momentum = momentum
@@ -353,11 +506,11 @@ class OIMLoss2_ori(nn.Module, ABC):
             concated_target = torch.zeros((len(concated_input)), dtype=concated_input.dtype).to(torch.device('cuda'))
             concated_target[0:len(ori_asso_ind)] = 1.0 / len(ori_asso_ind)
             associate_loss += -1 * (F.log_softmax(concated_input.unsqueeze(0), dim=1) * concated_target.unsqueeze(0)).sum()
-        loss2 = 0.5 * associate_loss / len(targets)
+        loss_instance = 0.5 * associate_loss / len(targets)
         # loss +=loss2
         # loss = self.ce(outputs, targets)
-        
-        return loss, loss2
+        return loss, loss_instance     
+
 class DenseCrossEntropy(nn.Module):
     def forward(self, x, target):
         x = x.float()
@@ -444,3 +597,15 @@ class OIMLosswithTri(nn.Module, ABC):
         # loss +=loss2
         # loss = self.ce(outputs, targets)
         return loss, loss2
+
+loss_dict = {
+"OIMLoss_ori":OIMLoss_ori,
+"OIMLoss":OIMLoss,
+"OIMLoss_Mininstance":OIMLoss_Mininstance,
+"OIMLoss_siameseoffline":OIMLoss_siameseoffline,
+"OIMLoss2_oriinstance":OIMLoss2_oriinstance,
+"OIMLossArc":OIMLossArc,
+"OIMLoss_tri":OIMLoss_tri,
+"OIMLoss_con":OIMLoss_con,
+"OIMLoss_MS":OIMLoss_MS
+}

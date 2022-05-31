@@ -54,7 +54,7 @@ class BaselineOim(nn.Module):
 
     @classmethod
     def from_config(cls, cfg):
-        oim_loss = OIMLoss2(cfg.MODEL.BACKBONE.FEAT_DIM, cfg.MODEL.HEADS.NUM_CLASSES) #tmp moment
+        oim_loss = loss_dict[cfg.MODEL.LOSSES.NAME[0]](cfg.MODEL.BACKBONE.FEAT_DIM, cfg.MODEL.HEADS.NUM_CLASSES) #tmp moment
         backbone = build_backbone(cfg)
         heads = build_heads(cfg)
         return {
@@ -177,13 +177,53 @@ class BaselineOim(nn.Module):
             # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
             # loss_dict['loss_oim']=loss1
             loss_dict['loss_oim1'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
-
+        if "OIMLoss_tri" in loss_names:
+            oim_kwargs = self.loss_kwargs.get('oim')
+            loss1, loss2 = self.oim_loss(
+                pred_features,
+                gt_labels) #* oim_kwargs.get('scale')
+            # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+            # loss_dict['loss_oim']=loss1
+            loss_dict['loss_oim1'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+        if "OIMLoss_con" in loss_names:
+            oim_kwargs = self.loss_kwargs.get('oim')
+            loss1, loss2 = self.oim_loss(
+                pred_features,
+                gt_labels) #* oim_kwargs.get('scale')
+            # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+            # loss_dict['loss_oim']=loss1
+            loss_dict['loss_oim1'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+        if "OIMLoss_MS" in loss_names:
+            oim_kwargs = self.loss_kwargs.get('oim')
+            loss1, loss2 = self.oim_loss(
+                pred_features,
+                gt_labels) #* oim_kwargs.get('scale')
+            # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+            # loss_dict['loss_oim']=loss1
+            loss_dict['loss_oim1'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+        if "OIMLoss_Mininstance" in loss_names:
+            oim_kwargs = self.loss_kwargs.get('oim')
+            loss1, loss2 = self.oim_loss(
+                pred_features,
+                gt_labels) #* oim_kwargs.get('scale')
+            # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+            # loss_dict['loss_oim']=loss1
+            loss_dict['loss_oim1'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+        if "OIMLoss2_oriinstance" in loss_names:
+            oim_kwargs = self.loss_kwargs.get('oim')
+            loss1, loss2 = self.oim_loss(
+                pred_features,
+                gt_labels) #* oim_kwargs.get('scale')
+            # loss_dict['loss_oim'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
+            # loss_dict['loss_oim']=loss1
+            loss_dict['loss_oim1'], loss_dict['loss_oim2'] = loss1 * oim_kwargs.get('scale'), loss2 * oim_kwargs.get('scale')
 
         if "OIMLossArc" in loss_names:
             oim_kwargs = self.loss_kwargs.get('oim_arc')
             loss_dict['loss_oim_arc'] = self.oim_loss(
                 pred_features,
                 gt_labels) * oim_kwargs.get('scale')
+
         if 'TripletLoss' in loss_names:
             tri_kwargs = self.loss_kwargs.get('tri')
             loss_dict['loss_triplet'] = triplet_loss(
