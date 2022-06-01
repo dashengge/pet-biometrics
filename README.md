@@ -25,9 +25,9 @@
 - for conda
 
   ```
-  conda create -n fastreid python=3.7
+  conda create -n fastreid python=3.8
   conda activate fastreid
-  conda install pytorch==1.6.0 torchvision tensorboard -c pytorch
+  conda install pytorch==1.7.1 torchvision tensorboard -c pytorch
   pip install -r docs/requirements.txt
   ```
 
