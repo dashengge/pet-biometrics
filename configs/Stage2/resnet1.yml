@@ -7,7 +7,7 @@ MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim
   BACKBONE:
-    NAME: build_resnext_backbone
+    NAME: build_resnet_backbone
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
