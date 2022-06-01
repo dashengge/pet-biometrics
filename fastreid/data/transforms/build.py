@@ -61,7 +61,6 @@ def build_transforms(cfg, is_train=True):
 
         if do_autoaug:
             res.append(T.RandomApply([AutoAugment()], p=autoaug_prob))
-
         if size_train[0] > 0:
             res.append(T.Resize(size_train[0] if len(size_train) == 1 else size_train, interpolation=3))
 
