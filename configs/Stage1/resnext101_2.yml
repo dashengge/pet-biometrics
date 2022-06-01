@@ -4,6 +4,34 @@ INPUT:
   SIZE_TRAIN: [256, 256]
   SIZE_TEST: [256, 256]
 
+  CJ:
+    ENABLED: True
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    SATURATION: 0.1
+    HUE: 0.1
+    PROB: 0.5
+
+# # Random probability for image horizontal flip
+# _C.INPUT.FLIP = CN({"ENABLED": False})
+# _C.INPUT.FLIP.PROB = 0.5
+
+# # Value of padding size
+# _C.INPUT.PADDING = CN({"ENABLED": False})
+# _C.INPUT.PADDING.MODE = 'constant'
+# _C.INPUT.PADDING.SIZE = 10
+
+# # Random color jitter
+# _C.INPUT.CJ = CN({"ENABLED": False})
+# _C.INPUT.CJ.PROB = 0.5
+# _C.INPUT.CJ.BRIGHTNESS = 0.15
+# _C.INPUT.CJ.CONTRAST = 0.15
+# _C.INPUT.CJ.SATURATION = 0.1
+# _C.INPUT.CJ.HUE = 0.1
+
+# # Random Affine
+# _C.INPUT.AFFINE = CN({"ENABLED": False})
+
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim
