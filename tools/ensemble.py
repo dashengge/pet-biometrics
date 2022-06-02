@@ -2,6 +2,16 @@ import cv2
 import os
 import numpy as np
 files = [
+
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnet101_finetune16_1.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnet101_finetune16_2.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune16_1.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune16_2.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune20_2.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune20_3.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune20.csv",
+# "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune100.csv",
+
 "./submit1.csv",
 "./submit2.csv",
 "./submit3.csv",

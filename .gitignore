@@ -1,7 +1,8 @@
+csv/
 logs
 *.pth
 *checkpoint
-events*
+# events*
 sbs*
 resn*/
 degug*
