@@ -3,7 +3,7 @@ _BASE_: ../Base-SBS.yml
 INPUT:
   SIZE_TRAIN: [384, 384]
   SIZE_TEST: [384, 384]
-
+  
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim

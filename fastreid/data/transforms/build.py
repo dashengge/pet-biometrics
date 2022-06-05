@@ -54,6 +54,9 @@ def build_transforms(cfg, is_train=True):
         do_rea = cfg.INPUT.REA.ENABLED
         rea_prob = cfg.INPUT.REA.PROB
         rea_value = cfg.INPUT.REA.VALUE
+        do_motion= cfg.INPUT.MOTION.ENABLED
+        do_jepg = cfg.INPUT.JEPG.ENABLED
+        do_gauss = cfg.INPUT.GAUSS.ENABLED
 
         # random patch
         do_rpt = cfg.INPUT.RPT.ENABLED
@@ -76,6 +79,13 @@ def build_transforms(cfg, is_train=True):
 
         if do_cj:
             res.append(T.RandomApply([T.ColorJitter(cj_brightness, cj_contrast, cj_saturation, cj_hue)], p=cj_prob))
+        if do_gauss:
+            res.append(T.RandomApply(GaussianBlur()), p=0.5)
+        if do_motion:
+            res.append(MotionBlur())
+        if do_jepg:
+            res.append(JpegCompress(30,70))
+
         if do_affine:
             res.append(T.RandomAffine(degrees=10, translate=None, scale=[0.9, 1.1], shear=0.1, resample=False,
                                       fillcolor=0))

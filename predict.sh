@@ -1,3 +1,4 @@
+# python tools/test.py --config-file logs/log8/config.yaml --submit-file ./submit1.csv
 python tools/test.py --config-file logs/resnet1/config.yaml --submit-file ./submit1.csv
 python tools/test.py --config-file logs/resnet2/config.yaml --submit-file ./submit2.csv
 python tools/test.py --config-file logs/resnext_cont1/config.yaml --submit-file ./submit3.csv

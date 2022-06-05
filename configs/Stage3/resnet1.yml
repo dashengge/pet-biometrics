@@ -3,6 +3,24 @@ _BASE_: ../Base-SBS.yml
 INPUT:
   SIZE_TRAIN: [256, 256]
   SIZE_TEST: [256, 256]
+  CJ:
+    ENABLED: True
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    SATURATION: 0.1
+    HUE: 0.1
+    PROB: 0.5
+  AFFINE:
+    ENABLED: True
+  AUGMIX:
+    ENABLED: True
+    PROB: 0.5
+  MOTION:
+    ENABLE: TRUE 
+  JEPG:
+    ENABLE: TRUE 
+  GAUSS:
+    ENABLE: TRUE 
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim

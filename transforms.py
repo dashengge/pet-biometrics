@@ -4,7 +4,8 @@
 @contact: sherlockliao01@gmail.com
 """
 
-__all__ = ['ToTensor', 'RandomPatch', 'AugMix', "MotionBlur", "Rotate1","JpegCompress", "GaussianBlur"]
+__all__ = ['ToTensor', 'RandomPatch', 'AugMix', "MotionBlur", "Rotate1","JpegCompress"]
+
 import math
 import random
 from collections import deque
@@ -12,7 +13,6 @@ from PIL import Image
 
 import numpy as np
 import torch
-from PIL import ImageFilter
 
 from .functional import to_tensor, augmentations
 import albumentations as A
@@ -237,17 +237,6 @@ class Rotate1(object):
         t1 = np.array(image)
         t2 = self.trans(image=t1)["image"]
         return Image.fromarray(t2)
-
-class GaussianBlur(object):
-    """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
-
-    def __init__(self, sigma=[.1, 2.]):
-        self.sigma = sigma
-
-    def __call__(self, x):
-        sigma = random.uniform(self.sigma[0], self.sigma[1])
-        x = x.filter(ImageFilter.GaussianBlur(radius=sigma))
-        return x
 
 class JpegCompress(object):
     """Decrease Jpeg compression of an image.
