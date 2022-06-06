@@ -44,3 +44,4 @@ model_ts*.txt
 .vscode
 _darcs
 .DS_Store
+trainr_test.sh

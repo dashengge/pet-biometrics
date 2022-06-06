@@ -1,15 +1,15 @@
 _BASE_: ../Base-SBS.yml
 
 INPUT:
-  SIZE_TRAIN: [384, 384]
-  SIZE_TEST: [384, 384]
+  SIZE_TRAIN: [256, 256]
+  SIZE_TEST:  [256, 256]
   AFFINE:
     ENABLED: True
   AUGMIX:
     ENABLED: True
     PROB: 0.5
   MOTION:
-    ENABLE: TRUE 
+    ENABLED: True 
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim
@@ -18,7 +18,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "logs/resnext101_1_finetune/model_best.pth"
+  WEIGHTS: "logs/resnext101_1_validation/model_best.pth"
   LOSSES:
     NAME: ("OIMLoss",) #containing both oim and instance contrastive loss "CrossEntropyLoss", 
     CE:
@@ -65,4 +65,4 @@ DATALOADER:
 TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
-OUTPUT_DIR: logs/resnext101_1_validation
+OUTPUT_DIR: logs/resnext101_1_final

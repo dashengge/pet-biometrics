@@ -79,7 +79,6 @@ def main(args):
     model = build_model(cfg)
     Checkpointer(model).load(cfg.MODEL.WEIGHTS)  # load trained model
     model.cuda()
-    model.eval()
     transforms = build_transforms(cfg, is_train=False)
     # print(model(x).shape)
     data_dir = "./datasets/pet_biometric_challenge_2022/test/test"

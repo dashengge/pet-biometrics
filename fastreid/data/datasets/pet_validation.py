@@ -63,7 +63,7 @@ class Pet_Validation(ImageDataset):
         train,query,gallery = self.process_dir(self.train_dir)
         # query = self.process_dir(self.query_dir, is_train=False)
         # gallery = self.process_dir(self.gallery_dir, is_train=False)
-        super(Pet, self).__init__(train, query, gallery, **kwargs)
+        super(Pet_Validation, self).__init__(train, query, gallery, **kwargs)
     def process_dir(self, dir_path, is_train=True):
         train = []
         query = []
