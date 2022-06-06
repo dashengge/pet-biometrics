@@ -215,21 +215,24 @@ class DefaultTrainer(TrainerBase):
         cfg = self.auto_scale_hyperparams(cfg, data_loader.dataset.num_classes)
         model = self.build_model(cfg)
         # model_ema = self.build_model(cfg)
-        features, labels = self.extract_on_dataset(model, data_loader_extract)
-        sameple_feature = torch.stack(features)
-        sample_labels = torch.tensor(labels)
-        model.oim_loss.sample_features = F.normalize(sameple_feature, dim=1).cuda()
-        model.oim_loss.sample_labels =sample_labels.cuda()
-        # print("==========================")
-        centers = collections.defaultdict(list)
-        for i, label in enumerate(labels):
-            if label == -1:
-                continue
-            centers[label].append(features[i])
-        centers = [torch.stack(centers[idx], dim=0).mean(0) for idx in sorted(centers.keys())]
-        centers = torch.stack(centers, dim=0)
-        # print("=========get oim features", centers.shape)
-        model.oim_loss.features = F.normalize(centers, dim=1).cuda()
+
+        
+        # features, labels = self.extract_on_dataset(model, data_loader_extract)
+        # sameple_feature = torch.stack(features)
+        # sample_labels = torch.tensor(labels)
+        # model.oim_loss.sample_features = F.normalize(sameple_feature, dim=1).cuda()
+        # model.oim_loss.sample_labels =sample_labels.cuda()
+        # # print("==========================")
+        # centers = collections.defaultdict(list)
+        # for i, label in enumerate(labels):
+        #     if label == -1:
+        #         continue
+        #     centers[label].append(features[i])
+        # centers = [torch.stack(centers[idx], dim=0).mean(0) for idx in sorted(centers.keys())]
+        # centers = torch.stack(centers, dim=0)
+        # # print("=========get oim features", centers.shape)
+        # model.oim_loss.features = F.normalize(centers, dim=1).cuda()
+
         optimizer, param_wrapper = self.build_optimizer(cfg, model)
 
         # For training, wrap with DDP. But don't need this for inference.
