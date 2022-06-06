@@ -15,6 +15,7 @@ INPUT:
   AUGMIX:
     ENABLED: True
     PROB: 0.5
+
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim

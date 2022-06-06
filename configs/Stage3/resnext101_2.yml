@@ -10,6 +10,17 @@ INPUT:
     PROB: 0.5
   MOTION:
     ENABLED: True 
+  JEPG:
+    ENABLED: True 
+  GAUSS:
+    ENABLED: True 
+  CJ:
+    ENABLED: True
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    SATURATION: 0.1
+    HUE: 0.1
+    PROB: 0.5
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim

@@ -80,7 +80,7 @@ def build_transforms(cfg, is_train=True):
         if do_cj:
             res.append(T.RandomApply([T.ColorJitter(cj_brightness, cj_contrast, cj_saturation, cj_hue)], p=cj_prob))
         if do_gauss:
-            res.append(T.RandomApply(GaussianBlur()), p=0.5)
+            res.append(T.RandomApply([GaussianBlur()], p=0.5))
         if do_motion:
             res.append(MotionBlur())
         if do_jepg:
