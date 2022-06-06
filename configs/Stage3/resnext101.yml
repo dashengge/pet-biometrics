@@ -30,7 +30,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "logs/resnext101_1_validation/model_best.pth"
+  WEIGHTS: "logs/resnext101_1_finetune/model_best.pth"
   LOSSES:
     NAME: ("OIMLoss",) #containing both oim and instance contrastive loss "CrossEntropyLoss", 
     CE:

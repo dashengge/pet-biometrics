@@ -21,6 +21,7 @@ INPUT:
     SATURATION: 0.1
     HUE: 0.1
     PROB: 0.5
+
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim
@@ -29,7 +30,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "logs/resnet101_2_validation/model_best.pth"
+  WEIGHTS: "logs/resnet101_2_finetune/model_best.pth"
   LOSSES:
     NAME: ("OIMLoss",) #"CrossEntropyLoss", 
     CE:

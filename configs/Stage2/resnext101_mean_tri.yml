@@ -12,7 +12,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "./logs/resnext101_con/model_best.pth"
+  WEIGHTS: "./logs/resnext101_mean_tri/model_best.pth"
   LOSSES:
     NAME: ("OIMLoss",) #"CrossEntropyLoss", 
     CE:
@@ -60,4 +60,4 @@ DATALOADER:
 TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
-OUTPUT_DIR: logs/resnext101_1_validation
+OUTPUT_DIR: logs/resnext101_mean_tri_finetune

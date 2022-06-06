@@ -87,6 +87,7 @@ def main(args):
         data = data[1:]
     inputs={}
     inputs["targets"] = torch.zeros([2,]).cuda()
+
     # all_img = []
     # for line in tqdm(data):
     #     img_path1, img_path2 = str(line.strip()).split(',')
@@ -157,10 +158,11 @@ def main(args):
         img2 = transforms(img2)
         input_img = torch.stack([img1, img2])
         input_img = input_img.cuda()
-        input_img_flip=input_img.clone().flip(dims=[3])
-        inputs["images"]=input_img_flip
+        # input_img_flip=input_img.clone().flip(dims=[3])
+        inputs["images"]=input_img
         out_embeddings = model(inputs, True)
         out_embeddings = out_embeddings["features"] #: feat
+
             # Flip test
             # if flip_test:
             #     # print(input_img.shape)

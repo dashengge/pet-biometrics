@@ -29,7 +29,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "logs/resnext101_3_validation/model_best.pth"
+  WEIGHTS: "logs/resnext101_3_finetune/model_best.pth"
   LOSSES:
     NAME: ("OIMLoss",) #"CrossEntropyLoss", 
     CE:
