@@ -16,7 +16,6 @@ INPUT:
     ENABLED: True 
   CJ:
     ENABLED: True
-
 MODEL:
   FREEZE_LAYERS: []
   META_ARCHITECTURE: BaselineOim
