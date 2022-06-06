@@ -162,7 +162,6 @@ def main(args):
         inputs["images"]=input_img
         out_embeddings = model(inputs, True)
         out_embeddings = out_embeddings["features"] #: feat
-
             # Flip test
             # if flip_test:
             #     # print(input_img.shape)
