@@ -4,7 +4,7 @@ import json
 
 cluster=0
 index_cluster={}
-with open("/home/123/pet_rec/tools/ensemble_avgmodels_adjust.csv", "r") as f1:
+with open("/home/123/pet_rec/tools/ensemble_avgmodels.csv", "r") as f1:
     data = f1.readlines()
     data = data[1:]
     img_paths1,img_paths2,scores = [],[],[]
@@ -32,3 +32,4 @@ with open("/home/123/pet_rec/tools/ensemble_avgmodels_adjust.csv", "r") as f1:
 with open("./validation2.json", 'w') as f:
     json_dict = json.dumps(index_cluster)
     f.write(json_dict)
+    
