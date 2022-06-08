@@ -32,7 +32,7 @@ def default_argument_parser():
     parser = argparse.ArgumentParser(description="average checkpoints")
     parser.add_argument("--log-dir", default="", metavar="FILE", help="path to config file")
     return parser
-parser = default_argument_parser()
+parser = default_argument_parser().parse_args()
 log_dir = parser.log_dir
 
 state_dicts = [

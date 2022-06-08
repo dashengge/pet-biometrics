@@ -60,4 +60,4 @@ DATALOADER:
 TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
-OUTPUT_DIR: logs_submit_test/resnext101_con
+OUTPUT_DIR: logs_submit/resnext101_con
