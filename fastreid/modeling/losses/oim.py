@@ -229,7 +229,7 @@ class OIMLoss(nn.Module, ABC):
             associate_loss += -1 * (F.log_softmax(concated_input.unsqueeze(0), dim=1) * concated_target.unsqueeze(0)).sum()
         loss_wincetance = 0.5 * associate_loss / len(targets)
         # loss +=loss2
-        loss = self.ce(outputs, targets)
+        loss = F.cross_entropy(outputs, targets)
         # return loss, loss2
         return loss, loss_wincetance
 
@@ -292,7 +292,7 @@ class OIMLoss_con(nn.Module, ABC):
         # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
         loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
         # loss2 = TripletLossOim(inputs,targets,self.sample_features,self.sample_labels)
-        loss = self.ce(outputs, targets)
+        loss = F.cross_entropy(outputs, targets)
         # return loss, loss2
         return loss, loss2
 
