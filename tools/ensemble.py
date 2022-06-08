@@ -12,7 +12,6 @@ files = [
 # "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/pet_rec/datasets/pet_biometric_challenge_2022/resnext101_finetune100.csv",
 "/home/123/pet_rec/submit_resnext101_1.csv",
 "/home/123/pet_rec/submit_resnext101_con.csv",
-
 ]
 
 scores_list=[]
