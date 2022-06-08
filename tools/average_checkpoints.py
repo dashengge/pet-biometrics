@@ -25,11 +25,11 @@ def load_state_dict(path):
     state_dict = torch.load(path, map_location=torch.device("cpu"))
     return state_dict['model']
 state_dicts = [
-         "./resnext101_hardest_positive_all_data_final/model_0069.pth",
-         "./resnext101_hardest_positive_all_data_final/model_0074.pth",
-         "./resnext101_hardest_positive_all_data_final/model_0079.pth",
-         "./resnext101_hardest_positive_all_data_final/model_0084.pth",
-         "./resnext101_hardest_positive_all_data_final/model_final.pth",
+         "./logs_submit/resnext101_1/model_0069.pth",
+         "./logs_submit/resnext101_1/model_0074.pth",
+         "./logs_submit/resnext101_1/model_0079.pth",
+         "./logs_submit/resnext101_1/model_0084.pth",
+         "./logs_submit/resnext101_1/model_final.pth",
          ]
 # print(state_dict.keys())
 # for k, v in state_dict['model'].items():
@@ -53,4 +53,4 @@ for k, v in avg_state_dict.items():
     v.div_(avg_counts[k])
 avg_checkpoint=torch.load(state_dicts[-1], map_location=torch.device("cpu"))
 avg_checkpoint["model"]=avg_state_dict
-torch.save(avg_checkpoint, "./resnext101_hardest_positive_all_data_final/avg_model.pth")
+torch.save(avg_checkpoint, "./resnext101_1/avg_model.pth")

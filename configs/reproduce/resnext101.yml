@@ -14,7 +14,7 @@ MODEL:
     WITH_NL:  True
 # WEIGHTS: "./logs/Pet/sbs_resnext101/model_best.pth"
   LOSSES:
-    NAME: ("OIMLoss_con",) #"CrossEntropyLoss", 
+    NAME: ("OIMLoss",) #containing both oim and instance contrastive loss "CrossEntropyLoss",
     CE:
       EPSILON: 0.1
       SCALE: 1.0
@@ -60,4 +60,5 @@ DATALOADER:
 TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
-OUTPUT_DIR: logs_submit/resnext101_con
+OUTPUT_DIR: logs_submit/resnext101_1
+

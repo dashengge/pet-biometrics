@@ -280,7 +280,7 @@ class OIMLoss_con(nn.Module, ABC):
         inputs = F.normalize(inputs, dim=1).cuda()
         outputs = oim(inputs, targets, self.features, self.momentum)
         outputs2 = inputs.mm(self.sample_features.t())
-        temp_sims = outputs2.detach().clone()
+        # temp_sims = outputs2.detach().clone()
         # print(outputs)
         outputs /= self.temp
         outputs2 /= self.temp
@@ -295,6 +295,7 @@ class OIMLoss_con(nn.Module, ABC):
         loss = self.ce(outputs, targets)
         # return loss, loss2
         return loss, loss2
+
 class OIMLoss_MS(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
         super(OIMLoss_MS, self).__init__()

@@ -4,29 +4,31 @@ import json
 
 cluster=0
 index_cluster={}
-with open("./datasets/pet_biometric_challenge_2022/validation/submit.csv", "r") as f1:
+with open("/home/123/pet_rec/tools/ensemble_avgmodels_adjust.csv", "r") as f1:
     data = f1.readlines()
     data = data[1:]
     img_paths1,img_paths2,scores = [],[],[]
     for line in data:
-        img_path1, img_path2,socre = str(line.strip()).split(',')
+        img_path1, img_path2,score = str(line.strip()).split(',')
         score = float(score)
-        if score<0.6158:
+        # if score<0.60158:
+        if score<0.55:
+            print(img_path1[-8:], img_path2[-8:],score)
             if img_path1 not in index_cluster.keys():
                 index_cluster[img_path1]=cluster
                 cluster+=1
             if img_path2 not in index_cluster.keys():
                 index_cluster[img_path2]=cluster
                 cluster+=1
-        if score>0.72358:
+        if score>0.78358:
             if img_path1 not in index_cluster.keys() and img_path2 not in index_cluster.keys():
                 index_cluster[img_path1]=index_cluster[img_path2]=cluster
                 cluster+=1
             elif img_path1 in index_cluster.keys():
-                index_cluster[img_path2]=index_cluster[img_path2]
+                index_cluster[img_path2]=index_cluster[img_path1]
             else:
                 index_cluster[img_path1]=index_cluster[img_path2]
 
-with open("./validation.json", 'w') as f:
+with open("./validation2.json", 'w') as f:
     json_dict = json.dumps(index_cluster)
     f.write(json_dict)

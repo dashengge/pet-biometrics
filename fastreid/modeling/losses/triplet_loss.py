@@ -182,7 +182,6 @@ def contrastiveLoss(inputs_col, targets_col, inputs_row, target_row):
             neg_count.append(len(neg_pair))
         else:
             neg_loss = 0
-
         loss.append(pos_loss + neg_loss)
     if inputs_col.shape[0] == inputs_row.shape[0]:
         prefix = "batch_"

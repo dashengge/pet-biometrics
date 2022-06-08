@@ -81,17 +81,18 @@ class Pet_Validation(ImageDataset):
                 # else:
                 #     train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
                 
-                # train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
-                # if (int(pid)+1)%10==0:
-                #     test[int(pid)].append(img_path)
+                train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
+                if (int(pid)+1)%10==0:
+                    test[int(pid)].append(img_path)
 
                 # if int(pid)%20==0:
-                if (int(pid)+1)%5==0:
-                # if random.random()<0.15:
-                    train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
-                    test[int(pid)].append(img_path)
-            
-            data  = open("./datasets/validation.json",'r')
+
+                # if (int(pid)+1)%5==0:
+                # # if random.random()<0.15:
+                #     train.append((osp.join(dir_path,img_path), self.dataset_name + "_" + str(pid), self.dataset_name + "_" + str(-1)))
+                #     test[int(pid)].append(img_path)
+
+            data  = open("./validation2.json",'r')
             data_validataion = json.load(data)
             labels = set()
             for key in data_validataion:

@@ -1,8 +1,8 @@
 _BASE_: ../Base-SBS.yml
 
 INPUT:
-  SIZE_TRAIN: [224, 224]
-  SIZE_TEST: [224, 224]
+  SIZE_TRAIN: [256, 256]
+  SIZE_TEST: [256, 256]
 
 MODEL:
   FREEZE_LAYERS: []

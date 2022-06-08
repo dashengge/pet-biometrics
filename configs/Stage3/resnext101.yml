@@ -8,19 +8,6 @@ INPUT:
   AUGMIX:
     ENABLED: True
     PROB: 0.5
-  MOTION:
-    ENABLED: True 
-  JEPG:
-    ENABLED: True 
-  GAUSS:
-    ENABLED: True 
-  CJ:
-    ENABLED: True
-    BRIGHTNESS: 0.15
-    CONTRAST: 0.15
-    SATURATION: 0.1
-    HUE: 0.1
-    PROB: 0.5
 
 MODEL:
   FREEZE_LAYERS: []
@@ -30,7 +17,7 @@ MODEL:
     DEPTH: 101x
     WITH_IBN: True
     WITH_NL:  True
-  WEIGHTS: "logs/resnext101_1_finetune/model_best.pth"
+  WEIGHTS: "/home/lzy/Generate/re-id/00_inversion_person/encoder4editing/reid_baseline2/pet_rec/final/logs_final/resnext101hard_positive_instance_all_data_final/avg_model.pth"
   LOSSES:
     NAME: ("OIMLoss",) #containing both oim and instance contrastive loss "CrossEntropyLoss", 
     CE:
@@ -77,4 +64,4 @@ DATALOADER:
 TEST:
   EVAL_PERIOD: 5
   IMS_PER_BATCH: 256
-OUTPUT_DIR: logs/resnext101_1_final
+OUTPUT_DIR: logs/finetune_on_validation_all_data_o_aug
