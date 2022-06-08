@@ -195,7 +195,7 @@ class OIMLoss(nn.Module, ABC):
         # print(outputs)
         outputs /= self.temp
         outputs2 /= self.temp
-        # loss = F.cross_entropy(outputs, targets)
+        loss = F.cross_entropy(outputs, targets)
         # loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
         # loss2 = F.cross_entropy(outputs2, targets)
         # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
@@ -229,10 +229,10 @@ class OIMLoss(nn.Module, ABC):
             associate_loss += -1 * (F.log_softmax(concated_input.unsqueeze(0), dim=1) * concated_target.unsqueeze(0)).sum()
         loss_wincetance = 0.5 * associate_loss / len(targets)
         # loss +=loss2
-        loss = F.cross_entropy(outputs, targets)
+        # loss = F.cross_entropy(outputs, targets)
+        # loss = self.ce(outputs, targets)
         # return loss, loss2
         return loss, loss_wincetance
-
 
 class OIMLoss_tri(nn.Module, ABC):
     def __init__(self, num_features, num_samples, temp=0.05, momentum=0.2):
@@ -284,7 +284,7 @@ class OIMLoss_con(nn.Module, ABC):
         # print(outputs)
         outputs /= self.temp
         outputs2 /= self.temp
-        # loss = F.cross_entropy(outputs, targets)
+        loss = F.cross_entropy(outputs, targets)
         # loss2 = MultiSimilarityLoss(inputs,targets,self.sample_features,self.sample_labels)
         # loss2 = F.cross_entropy(outputs2, targets)
         # loss2 = triplet_loss_MB(inputs,targets,self.sample_features,self.sample_labels)
@@ -292,7 +292,7 @@ class OIMLoss_con(nn.Module, ABC):
         # loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
         loss2 = contrastiveLoss(inputs,targets,self.sample_features,self.sample_labels)
         # loss2 = TripletLossOim(inputs,targets,self.sample_features,self.sample_labels)
-        loss = F.cross_entropy(outputs, targets)
+        # loss = F.cross_entropy(outputs, targets)
         # return loss, loss2
         return loss, loss2
 
