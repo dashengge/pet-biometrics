@@ -19,7 +19,6 @@ from fastreid.data.transforms import build_transforms
 from fastreid.data.data_utils import read_image
 from tqdm import tqdm
 from fastreid.evaluation.evaluator import inference_context
-
 def batch_torch_topk_self(qf, gf, k1, N=1000, query = False):
     # m = qf.shape[0]
     # n = gf.shape[0]

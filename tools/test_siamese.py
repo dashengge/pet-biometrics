@@ -86,7 +86,6 @@ def main(args):
     with open("./datasets/pet_biometric_challenge_2022/test/test_data.csv", "r") as f:
         data =f.readlines()
         data = data[1:]
-
     with open("./datasets/pet_biometric_challenge_2022/debug2.csv", "w") as f1:
         with inference_context(model), torch.no_grad():
             f1.write("imageA,imageB,prediction\n")

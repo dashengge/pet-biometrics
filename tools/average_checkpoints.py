@@ -36,7 +36,7 @@ parser = default_argument_parser().parse_args()
 log_dir = parser.log_dir
 state_dicts = [
         #  log_dir+"/model_0064.pth",
-        #  log_dir+"/model_0069.pth",
+         log_dir+"/model_0069.pth",
          log_dir+"/model_0074.pth",
          log_dir+"/model_0079.pth",
          log_dir+"/model_0084.pth",

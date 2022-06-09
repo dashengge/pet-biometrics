@@ -3,8 +3,8 @@ CUDA_VISIBLE_DEVICES=1 python tools/train_net.py --config-file  configs/reproduc
 CUDA_VISIBLE_DEVICES=1 python tools/train_net.py --config-file  configs/reproduce/resnext101.yml
 python tools/average_checkpoints.py --log-dir logs_submit/resnext101_con
 python tools/average_checkpoints.py --log-dir logs_submit/resnext101_1
-python tools/test_for_train.py --config-file   logs_submit/resnext101_con/config.yam   --submit-file ./resnext101_con.csv     MODEL.WEIGHTS  ./logs_submit/resnext101_con/avg_model.pth
-python tools/test_for_train.py --config-file   logs_submit/resnext101_1/config.yam   --submit-file ./resnext101_1.csv     MODEL.WEIGHTS  ./logs_submit/resnext101_1/avg_model.pth
+python tools/test_for_train.py --config-file   logs_submit/resnext101_con/config.yaml   --submit-file ./resnext101_con.csv     MODEL.WEIGHTS  ./logs_submit/resnext101_con/avg_model.pth
+python tools/test_for_train.py --config-file   logs_submit/resnext101_1/config.yaml   --submit-file ./resnext101_1.csv     MODEL.WEIGHTS  ./logs_submit/resnext101_1/avg_model.pth
 
 
 # python tools/test_for_train.py --config-file   logs/resnext101_1_final/config.yaml   --submit-file ./submit1.csv   MODEL.WEIGHTS  ./logs/resnext101_1_final/model_final.pth 
