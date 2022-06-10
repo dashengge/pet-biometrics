@@ -13,7 +13,6 @@ files = [
 "./resnext101_1_con_56.csv",
 "./resnext101_1_56.csv",
 ]
-
 scores_list=[]
 for file in files:
    with open(file, "r") as f1:

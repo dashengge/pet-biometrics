@@ -60,7 +60,6 @@ for c in state_dicts:
         else:
             avg_state_dict[k] += v.to(dtype=torch.float64)
             avg_counts[k] += 1
-
 for k, v in avg_state_dict.items():
     v.div_(avg_counts[k])
 avg_checkpoint=torch.load(state_dicts[-1], map_location=torch.device("cpu"))

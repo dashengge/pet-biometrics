@@ -29,7 +29,6 @@ MODEL:
     CLS_LAYER: Linear
     # SCALE: 64
     # MARGIN: 0.35
-
 SOLVER:
   AMP:
     ENABLED: False

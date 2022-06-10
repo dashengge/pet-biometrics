@@ -34,9 +34,7 @@
 We use GPU 3090 for training and testing. The cuda version is 11.1, torch version is 1.7.1, the python version is 3.8.8.
 
 ## Prepare Dataset
-
 Download the competition datasets pet_biometric_challenge_2022, and then unzip them under the directory like
-
 ```
 datasets
 ├── pet_biometric_challenge_2022
@@ -44,20 +42,16 @@ datasets
 │   └── validation
 │   └── test
 ```
-
 ## Prepare Pre-trained Models
 
 We have trained 8 models, and you can download the pre-trained model form this link: 链接：https://pan.baidu.com/s/1Z3PZLIer8S7U_NdCihgm9A 提取码：bauk. Then you should save it under the path of logs. The file tree should be like as:
-
 ```
 logs
 └── resnet101
     └── config.yaml
     └── model_final.pth
 ```
-
 ## Test
-
 You can get the final submit.csv by runing:
 
 ```
@@ -75,3 +69,4 @@ bash train.sh
 We train our model through three stage. Stage1 train the original dataset with 224 resolution by different losses , backbone and batchsize. Stage2 finetune the trainset with 384 resolution which is  inspired by **[kaggle-landmark-2021-1st-place](https://github.com/ChristofHenkel/kaggle-landmark-2021-1st-place)**. Stage3 finetune the model with trainset and validation set which is assigned with pseudo labels. The training process takes approximately 64 hours.
 
 ## Conclusion
+

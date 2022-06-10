@@ -119,7 +119,6 @@ def main(args):
     #     features = torch.sum(features,dim=0)
     #     print(features.shape)
     #     img_tensors_enhance[key]=features
-
     # with open("/home/lzy/fast-reid/datasets/pet_biometric_challenge_2022/validation/submit_all_data_rerank.csv", "w") as f1:
     #     for line in tqdm(data):
     #         img_path1, img_path2 = str(line.strip()).split(',')
@@ -202,7 +201,6 @@ def main(args):
                     similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
                     similarity = (similarity+1)/2
                 f1.write("{},{},{}\n".format(img_path1,img_path2,similarity))
-
 if __name__ == "__main__":
     args = default_argument_parser().parse_args()
     print("Command Line Args:", args)

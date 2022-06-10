@@ -53,7 +53,6 @@ def batch_torch_topk_self(qf, gf, k1, N=1000, query = False):
     del temp_qf
     del temp_d
     torch.cuda.empty_cache()  # empty GPU memory
-
     initial_rank = torch.cat(initial_rank, dim=0)#.cpu().numpy()
     if query:
         dist_mat = torch.cat(dist_mat, dim=0)  #.cpu().numpy()

@@ -13,7 +13,6 @@ from data.datasets import init_dataset
 # cfg.DATALOADER.SAMPLER = 'triplet'
 cfg.DATASETS.NAMES = ("market1501", "dukemtmc", "cuhk03", "msmt17",)
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
     parser.add_argument(
