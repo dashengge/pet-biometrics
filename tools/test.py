@@ -79,37 +79,15 @@ def main(args):
     model = build_model(cfg)
     Checkpointer(model).load(cfg.MODEL.WEIGHTS)  # load trained model
     model.cuda()
-    model.eval()
     transforms = build_transforms(cfg, is_train=False)
     # print(model(x).shape)
     data_dir = "./datasets/pet_biometric_challenge_2022/test/test"
     with open("./datasets/pet_biometric_challenge_2022/test/test_data.csv", "r") as f:
         data =f.readlines()
         data = data[1:]
-    submit_file = args.submit_file
-    with open(submit_file, "w") as f1:
-        with inference_context(model), torch.no_grad():
-            f1.write("imageA,imageB,prediction\n")
-            for line in tqdm(data):
-                img_path1, img_path2 = str(line.strip()).split(',')
-                img1 = read_image(os.path.join(data_dir, img_path1))
-                img2 = read_image(os.path.join(data_dir, img_path2))
-                img1 = transforms(img1)
-                img2 = transforms(img2)
-                input_img = torch.stack([img1, img2])
-                input_img = input_img.cuda()
-                input_img_flip=input_img.clone().flip(dims=[3])
-                out_embeddings = model(input_img)
-                # Flip test
-                if flip_test:
-                    flip_outputs = model(input_img_flip)
-                    out_embeddings = torch.cat([out_embeddings , flip_outputs], dim=1)
-                    similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
-                    similarity = (similarity+1)/2
-                else:
-                    similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
-                    similarity = (similarity+1)/2
-                f1.write("{},{},{}\n".format(img_path1,img_path2,similarity))
+    inputs={}
+    inputs["targets"] = torch.zeros([2,]).cuda()
+
     # all_img = []
     # for line in tqdm(data):
     #     img_path1, img_path2 = str(line.strip()).split(',')
@@ -171,6 +149,59 @@ def main(args):
     #         # out_embeddings = model(input_img)
     #         similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
     #         f1.write("{},{},{}\n".format(img_path1,img_path2,(similarity+1)/2))
+
+    for line in tqdm(data):
+        img_path1, img_path2 = str(line.strip()).split(',')
+        img1 = read_image(os.path.join(data_dir, img_path1))
+        img2 = read_image(os.path.join(data_dir, img_path2))
+        img1 = transforms(img1)
+        img2 = transforms(img2)
+        input_img = torch.stack([img1, img2])
+        input_img = input_img.cuda()
+        # input_img_flip=input_img.clone().flip(dims=[3])
+        inputs["images"]=input_img
+        out_embeddings = model(inputs, True)
+        out_embeddings = out_embeddings["features"] #: feat
+            # Flip test
+            # if flip_test:
+            #     # print(input_img.shape)
+            #     # inputs = input_img.flip(dims=[3])
+            #     inputs["images"]=input_img_flip
+            #     flip_outputs = model(inputs, True)
+            #     # out_embeddings = (out_embeddings + flip_outputs) / 2
+            #     flip_outputs = flip_outputs["features"] #: feat
+            #     out_embeddings = torch.cat([out_embeddings , flip_outputs], dim=1)
+            #     # print(out_embeddings.shape)
+            #     similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
+            #     similarity = (similarity+1)/2
+            # else:
+            #     similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
+            #     similarity = (similarity+1)/2
+            # f1.write("{},{},{}\n".format(img_path1,img_path2,similarity))
+    submit_file = args.submit_file
+    with open(submit_file, "w") as f1:
+        with inference_context(model), torch.no_grad():
+            f1.write("imageA,imageB,prediction\n")
+            for line in tqdm(data):
+                img_path1, img_path2 = str(line.strip()).split(',')
+                img1 = read_image(os.path.join(data_dir, img_path1))
+                img2 = read_image(os.path.join(data_dir, img_path2))
+                img1 = transforms(img1)
+                img2 = transforms(img2)
+                input_img = torch.stack([img1, img2])
+                input_img = input_img.cuda()
+                input_img_flip=input_img.clone().flip(dims=[3])
+                out_embeddings = model(input_img)
+                # Flip test
+                if flip_test:
+                    flip_outputs = model(input_img_flip)
+                    out_embeddings = torch.cat([out_embeddings , flip_outputs], dim=1)
+                    similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
+                    similarity = (similarity+1)/2
+                else:
+                    similarity = torch.cosine_similarity(torch.unsqueeze(out_embeddings[0],dim=0),torch.unsqueeze(out_embeddings[1],dim=0)).item()
+                    similarity = (similarity+1)/2
+                f1.write("{},{},{}\n".format(img_path1,img_path2,similarity))
 
 if __name__ == "__main__":
     args = default_argument_parser().parse_args()
