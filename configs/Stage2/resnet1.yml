@@ -1,8 +1,8 @@
 _BASE_: ../Base-SBS.yml
 
 INPUT:
-  SIZE_TRAIN: [256, 256]
-  SIZE_TEST:  [256, 256]
+  SIZE_TRAIN: [384, 384]
+  SIZE_TEST:  [384, 384]
   AFFINE:
     ENABLED: True
   AUGMIX:

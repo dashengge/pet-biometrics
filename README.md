@@ -70,5 +70,8 @@ bash train.sh
 
 We train our model through three stage. Stage1 train the original dataset with 224 resolution by different losses , backbone and batchsize. Stage2 finetune the trainset with 384 resolution which is  inspired by **[kaggle-landmark-2021-1st-place](https://github.com/ChristofHenkel/kaggle-landmark-2021-1st-place)**. Stage3 finetune the model with trainset and validation set which is assigned with pseudo labels. The training process takes approximately 64 hours.
 
+To simplify, you can also train stage 1 alone, which can achieve 88.6% AUC on test set with a single model.
+
+
 ## Conclusion
 
