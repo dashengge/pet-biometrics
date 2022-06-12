@@ -1,5 +1,7 @@
 # Code for pet biometrics challenge
 ![image-20220531043715690](1.png)
+
+The method details is described in our [report](https://github.com/dashengge/pet-biometrics/blob/main/report.pdf)
 ## Requirements
 
 - Linux or macOS with python ≥ 3.6
